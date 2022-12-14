@@ -1,3 +1,4 @@
+// you can easily find it, if you get path of each node
 
 	#include <iostream>
 	using namespace std;
@@ -53,6 +54,15 @@
 		return false;
 
 	}
+	void lowest_common_ancestor(TreeNode* root_node, int a , int b){
+		vector <int> a_p;
+		paths(root_node,a,a_p);
+		vector <int> b_p;
+		paths(root_node,b,b_p);
+		// you can find common ancestor form these two vectors
+		// just don't know yet why is it returning wrong value
+	}
+
 	void display(TreeNode* root_node){
 	cout<<root_node->data<<" -> ";
 	for(TreeNode* &i : root_node->children){
@@ -63,14 +73,9 @@
 		display(i);
 	}
 
-	}
+	}	
 	int main(){
 		int a[] = {10,20,50,-1,60,-1,-1,30,70,-1,80,110,-1,120,-1,-1,90,-1,-1,40,100,-1,-1,-1};
 		TreeNode* root_node = make_tree(a,sizeof(a)/sizeof(a[0]));
-		vector <int> p;
-		int target; cin>>target;
-		paths(root_node,target,p);
-		for(int i : p){
-			cout<<i<<" ";
-		}
+		lowest_common_ancestor(root_node,70,120);
 	}
