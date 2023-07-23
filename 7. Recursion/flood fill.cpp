@@ -1,39 +1,66 @@
 #include <iostream>
-#include <vector>
 using namespace std;
-void flood_fill(int a[3][3] , bool visited[3][3] , int sr , int sc , int er , int ec , string psf){
-	if(sr<0 or sc<0 or sr==er+1 or sc==ec+1 or visited[sr][sc] or a[sr][sc] == 1)
-	return;
-	if(sr == er and sc == ec){
-		cout<<psf<<endl;
-		return;	
-	} 
 
-	visited[sr][sc] = true;
-	// going down
-	flood_fill(a,visited,sr+1,sc , er ,ec , psf + 'd');
-	// going up
-	flood_fill(a,visited,sr-1,sc,er,ec,psf + 'u');
-	//going right
-	flood_fill(a,visited,sr,sc+1 , er,ec , psf+'r');
-	//going left
-	flood_fill(a,visited,sr,sc-1,er,ec,psf+'l');
-	visited[sr][sc] = false;
+#include <vector>
 
+void floodFill(vector<vector<int>> &ques , int r=0, int c = 0 , string ans = ""){
+
+if(r==ques.size()-1 and c==ques[0].size()-1){
+    cout<<ans<<endl;
+    return;
+}
+
+// moving up
+
+if(r>0 and ques[r-1][c]!=-1 and ques[r-1][c]!=1  ){
+    ques[r-1][c] = -1;
+    floodFill(ques,r-1,c,ans+"t");
+    ques[r-1][c] = 0;
+}
+
+//moving right 
+
+if(c<ques[0].size()-1 and ques[r][c+1]!=-1 and ques[r][c+1]!=1  ){
+    ques[r][c+1] = -1;
+    floodFill(ques,r,c+1,ans+"r");
+    ques[r][c+1] = 0;
+}
+
+//moving down
+
+if(r<ques.size()-1 and ques[r+1][c]!=-1 and ques[r+1][c]!=1  ){
+    ques[r+1][c] = -1;
+    floodFill(ques,r+1,c,ans+"d");
+    ques[r+1][c] = 0;
+}
+
+
+// moving left
+
+if(c>0 and ques[r][c-1]!=-1 and ques[r][c-1]!=1  ){
+    ques[r][c-1] = -1;
+    floodFill(ques,r,c-1,ans+"l");
+    ques[r][c-1] = 0;
+}
 
 }
+
 int main(){
-int a[3][3];
-for(int i = 0 ; i<3; i++){
-	for(int j = 0 ; j<3 ; j++){
-		cin>>a[i][j];
-	}
+
+int n,m;
+cin>>n>>m;
+vector <vector<int>> ques;
+for(int i = 0; i<n ; i++){
+    vector <int> rVec;
+    for(int j = 0 ; j<m ;j++){
+        int temp; cin>>temp;
+        rVec.push_back(temp);
+    }
+    ques.push_back(rVec);
+
 }
-bool visited[3][3]{false};
-flood_fill(a,visited,0,0,2,2,"");
 
 
-
-
+floodFill(ques);
 
 }
